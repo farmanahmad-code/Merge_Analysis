@@ -1,0 +1,19 @@
+"es":
+  "es_url" : "10.0.1.35"
+  "activity_index" : "migration_pd_activity" 
+  "empi_index" : "migration_pd_empi"
+  "attribution_index" : "migration_pd_attribution"
+
+
+"azkaban" :
+  "az_url" : "http://10.0.1.125:9081"
+  "username" : "azkaban"
+  "password" : "azkaban"
+
+
+"merge-api" : 
+  "api_base_url" : "10.0.1.98:10100"
+  "auth_base_url" : "stratifihealth.innovaccer.com/api/v2"
+  "username" : "care@innovaccer.com"
+  "password" : "demo123"
+
