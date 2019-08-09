@@ -14,6 +14,6 @@
 "merge-api" : 
   "api_base_url" : ""
   "auth_base_url" : ""
-  "username" : ""
-  "password" : ""
+  "username" : "" #Datashop Username
+  "password" : ""  #Datashop Password
 
