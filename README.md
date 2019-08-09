@@ -7,3 +7,7 @@ After that install the following libraries using pip command :
 requests, pandas ,json, elasticsearch, datetime, os, logging, yaml, math, random
 
 eg : pip3.6 install requests --user
+
+Update config.yml
+
+Enter command : python3.6 merge_analysis.py  to execute the script
