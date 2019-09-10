@@ -223,7 +223,7 @@ def insert_json_in_mongo(empi_list):
         else:
             f.write(empi_list[i]+"|")
     f.close()
-    API_URL="http://{}/analytics/empi/merge/create".format(config['merge-api']['api_base_url'])
+    API_URL="https://{}/analytics/empi/merge/create".format(config['merge-api']['api_base_url'])
     file_path = "empi-merge-pipe-seperated.csv"
     user_email = config['merge-api']['username']
     user_password = config['merge-api']['password']
@@ -237,6 +237,7 @@ def insert_json_in_mongo(empi_list):
     headers = {"Content-Type":"application/json"}
     response = requests.post(AUTH_URL, data=encrypt_json, headers=headers)
     response_string = response.text
+    
     response_json = json.loads(response_string)
     data_json = response_json['data']
 
@@ -247,7 +248,8 @@ def insert_json_in_mongo(empi_list):
     files = {'data': open(file_path, 'rb')}
     headers = {'Authorization': auth_token}
     r = requests.post(API_URL, files=files, headers=headers)
-    r = r.json()
+    r = r.json() 
+    
     if r['success']==False:
         raise Exception('JSON not inserted in mongo reason : '+str(r['error']))
     
@@ -271,7 +273,7 @@ def update_dob(empi_list,options):
         while True :
             print("DOB should be one of the following : ",options)
             updated_dob = input('Enter correct dob : ')
-            print(type(options[1]))
+            
             if updated_dob in options:
                 try :
                     updated_dob = datetime.strptime(updated_dob, "%Y-%m-%d").date()
@@ -308,7 +310,7 @@ def update_last_name(empi_list,options):
     if input("Enter yes if you want to update last name : ").lower()=='yes':
         os.system('clear')
         while True:
-            print("First name should be one of the following : ",options)
+            print("Last name should be one of the following : ",options)
             updated_ln = input("Enter correct last name : ").lower().strip()
             if updated_ln in options:
                 update_indexes_in_elastic(empi_list,"ln",updated_ln)
@@ -325,7 +327,7 @@ def run_merge_split_job():
     postdata = {'username':config['azkaban']['username'],'password':config['azkaban']['password']}
     login_url = str_url + '?action=login'
     response = requests.post(login_url, postdata, verify=False).json()
-    postdata = {'session.id': response['session.id'], 'ajax': 'executeFlow', 'project': 'merge-split', 'flow': 'merge-split'}
+    postdata = {'session.id': response['session.id'], 'ajax': 'executeFlow', 'project': 'Merge_Split', 'flow': 'empi-merge'}
     fetch_url = str_url + '/executor?ajax=executeFlow'
     r = requests.get(fetch_url, postdata).json()
     print(r)
