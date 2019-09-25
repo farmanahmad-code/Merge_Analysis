@@ -157,6 +157,9 @@ def update_indexes_in_elastic(empi_list,field,value):
     index_list = [(config['es']['activity_index'],'activity'),(config['es']['empi_index'],'empi'),(config['es']['attribution_index'],'attribution')]
     for empi in empi_list:
         query="""{{
+        "script" : {{
+      "inline" : "ctx._source.{1}='{2}';"
+}},
     "query": {{
         "bool": {{
             "must": {{
@@ -169,10 +172,6 @@ def update_indexes_in_elastic(empi_list,field,value):
             }}
         }}
     }}
-,
-    "script" : {{
-      "inline" : "ctx._source.{1}='{2}';"
-}}
 }}"""
         query=query.format(empi,field,value)
         for index in index_list:
